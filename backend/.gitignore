@@ -1,0 +1,20 @@
+# Environment secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Runtime data (managed by Docker volumes)
+uploads/
+outputs/
+*.db
+
+# Node
+node_modules/
+.next/
+
+# Misc
+.DS_Store

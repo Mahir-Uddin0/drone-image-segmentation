@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: droneseg-backend:latest
+    container_name: droneseg-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    env_file: .env
+    environment:
+      UPLOAD_DIR: /app/uploads
+      OUTPUT_DIR: /app/outputs
+      DB_PATH: /app/data/droneseg.db
+    volumes:
+      - uploads:/app/uploads
+      - outputs:/app/outputs
+      - db:/app/data
+      - hf_cache:/root/.cache/huggingface
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  uploads:
+  outputs:
+  db:
+  hf_cache:
